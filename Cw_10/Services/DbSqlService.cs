@@ -51,7 +51,18 @@ namespace Cw_10.Services
 
         public IActionResult ModifyDoctor(Doctor doctor)
         {
-            return Ok("TODO");
+            var doc = _cfc.Doctors.FirstOrDefault(doc => doc.IdDoctor == doctor.IdDoctor);
+
+            if (doc == null)
+            {
+                return Ok("Doctor does not exist");
+            }
+
+            _cfc.Doctors.Remove(doc);
+            _cfc.Doctors.Add(doctor);              
+            _cfc.SaveChanges();
+           
+            return Ok("Doctor modified");
         }
 
         public IActionResult Seed()
